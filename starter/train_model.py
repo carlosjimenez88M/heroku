@@ -44,6 +44,17 @@ def train_model(X_train, y_train):
     model = RandomForestClassifier(n_estimators=100, random_state=42)
     model.fit(X_train, y_train)
     return model
+def compute_slice_metrics(df, feature, model, encoder, lb):
+    with open("slice_output.txt", "w") as s:
+        for val in df[feature].unique():
+            temp = df[df[feature] == val]
+            X, y, _, _ = process_data(
+                temp, categorical_features=categorical_features, label="salary",
+                training=False, encoder=encoder, lb=lb
+            )
+            preds = inference(model, X)
+            p, r, f = compute_model_metrics(y, preds)
+            s.write(f"{feature}={val} Precision={p} Recall={r} F1={f}\n")
 
 model = train_model(X_train, y_train)
 
@@ -53,3 +64,5 @@ joblib.dump(encoder, "model/encoder.pkl")
 joblib.dump(lb, "model/lb.pkl")
 
 print("✅ Modelo entrenado y guardado exitosamente.")
+compute_slice_metrics(df, "education", model, encoder, lb)
+print("slice_output.txt creado")
