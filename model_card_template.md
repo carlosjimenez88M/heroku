@@ -35,8 +35,8 @@ Indicate how the dataset was split for training vs. testing, as well as any addi
 ## Metrics
 Include the metrics used (F1, precision, recall) and the model’s performance on the test data:
 - Precision: 0.71
-- Recall: 0.78
-- F1-score: 0.67
+- Recall: 0.6384
+- F1-score: 0.6851
 
 ## Ethical Considerations
 Address potential biases (e.g., in the data) and how these biases might affect outcomes or fairness. Note the importance of continuous monitoring.
