@@ -6,8 +6,8 @@ from sklearn.metrics import fbeta_score, precision_score, recall_score
 from data import process_data
 
 # Cargar los datos
-df = pd.read_csv("/Users/danieljimenez/Desktop/MLops_certification/heroku/nd0821-c3-starter-code/starter/data/census.csv")
-df = df.columns = df.columns.str.strip()
+df = pd.read_csv("census.csv")
+df.columns = df.columns.str.strip()
 # Definir las columnas categóricas
 categorical_features = [
     "workclass", "education", "marital-status", "occupation",
@@ -32,9 +32,9 @@ def train_model(X_train, y_train):
 model = train_model(X_train, y_train)
 
 # Guardar el modelo y los encoders
-joblib.dump(model, "starter/model/model.pkl")
-joblib.dump(encoder, "starter/model/encoder.pkl")
-joblib.dump(lb, "starter/model/lb.pkl")
+joblib.dump(model, "../model/model.pkl")
+joblib.dump(encoder, "../model/encoder.pkl")
+joblib.dump(lb, "../model/lb.pkl")
 
 print("✅ Modelo entrenado y guardado exitosamente.")
 
@@ -47,6 +47,18 @@ def compute_model_metrics(y, preds):
     precision = precision_score(y, preds, zero_division=1)
     recall = recall_score(y, preds, zero_division=1)
     return precision, recall, fbeta
+
+def compute_slice_metrics(df, feature, model, encoder, lb):
+    with open("slice_output.txt", "w") as s:
+        for val in df[feature].unique():
+            temp = df[df[feature] == val]
+            X, y, _, _ = process_data(
+                temp, categorical_features=categorical_features, label="salary",
+                training=False, encoder=encoder, lb=lb
+            )
+            preds = inference(model, X)
+            p, r, f = compute_model_metrics(y, preds)
+            s.write(f"{feature}={val} Precision={p} Recall={r} F1={f}\n")
 
 # Hacer predicciones con el modelo
 def inference(model, X):
@@ -61,3 +73,5 @@ y_preds = inference(model, X_test)
 precision, recall, fbeta = compute_model_metrics(y_test, y_preds)
 
 print(f"📊 Precisión: {precision:.4f}, Recall: {recall:.4f}, F1-score: {fbeta:.4f}")
+compute_slice_metrics(df, "education", model, encoder, lb)
+print("slice_output.txt creado")
