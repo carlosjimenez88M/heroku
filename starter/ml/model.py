@@ -6,7 +6,9 @@ from sklearn.model_selection import train_test_split
 
 from data import process_data
 
-df = pd.read_csv("https://raw.githubusercontent.com/carlosjimenez88M/heroku/refs/heads/master/data/census.csv")
+df = pd.read_csv(
+    "./census.csv"
+    )
 df.columns = df.columns.str.strip()
 
 categorical_features = [
