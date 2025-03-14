@@ -45,11 +45,11 @@ def train_model(X_train, y_train):
 
 
 model = train_model(X_train, y_train)
+model_dir = os.path.join(os.path.dirname(__file__), "model")
 
-
-joblib.dump(model, "../model/model.pkl")
-joblib.dump(encoder, "../model/encoder.pkl")
-joblib.dump(lb, "../model/lb.pkl")
+joblib.dump(model, os.path.join(model_dir, "model.pkl"))
+joblib.dump(encoder, os.path.join(model_dir, "encoder.pkl"))
+joblib.dump(lb, os.path.join(model_dir, "lb.pkl"))
 
 print("✅ Modelo entrenado y guardado exitosamente.")
 
