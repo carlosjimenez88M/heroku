@@ -12,9 +12,7 @@ df_path = os.path.join(
     os.path.dirname(__file__),
     "census.csv")
 df = pd.read_csv(df_path)
-df = pd.read_csv(
-    "census.csv"
-)
+
 df.columns = df.columns.str.strip()
 
 categorical_features = [
