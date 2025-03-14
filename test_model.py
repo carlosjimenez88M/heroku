@@ -1,6 +1,6 @@
 import joblib
 import pandas as pd
-from train_model import train_model
+from starter.ml.model import train_model
 from data import process_data
 
 
