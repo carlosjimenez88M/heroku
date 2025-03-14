@@ -46,6 +46,7 @@ def train_model(X_train, y_train):
 
 model = train_model(X_train, y_train)
 model_dir = os.path.join(os.path.dirname(__file__), "model")
+os.makedirs(model_dir, exist_ok=True)
 
 joblib.dump(model, os.path.join(model_dir, "model.pkl"))
 joblib.dump(encoder, os.path.join(model_dir, "encoder.pkl"))
