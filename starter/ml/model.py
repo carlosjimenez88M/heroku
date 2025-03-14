@@ -7,7 +7,7 @@ from sklearn.model_selection import train_test_split
 from data import process_data
 
 df = pd.read_csv(
-    "./census.csv"
+    "../../data/census.csv"
     )
 df.columns = df.columns.str.strip()
 
