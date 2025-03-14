@@ -71,7 +71,7 @@ This indicates the request succeeded (HTTP 200) and the model returned the predi
 
 
 
-### continuous_deployment
+### continuous_integration
 ![](continuous_integration.png)
 
 
