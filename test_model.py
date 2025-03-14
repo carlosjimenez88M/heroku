@@ -21,6 +21,6 @@ def test_inference():
 
 
 def test_saved_model():
-    model_path = "model/model.pkl"
+    model_path = "starter/model/model.pkl"
     m = joblib.load(model_path)
     assert m is not None
