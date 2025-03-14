@@ -1,8 +1,7 @@
 import requests
 
-
-HEROKU_API_URL = "https://super-cool-demo-app-aba1064edd33.herokuapp.com/predict"
-
+HEROKU_API_URL =\
+    "https://super-cool-demo-app-aba1064edd33.herokuapp.com/predict"
 
 
 input_data = {
