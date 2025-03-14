@@ -1,49 +1,75 @@
+# =====================#
+# ---- Libraries ---- #
+# =====================#
+
 import numpy as np
 from sklearn.preprocessing import LabelBinarizer, OneHotEncoder
 
+# =========================#
+# ---- Main Function ---- #
+# =========================#
+
 
 def process_data(
-    X, categorical_features=[], label=None, training=True, encoder=None, lb=None
+    X,
+    categorical_features=None,
+    label=None,
+    training=True,
+    encoder=None,
+    lb=None
 ):
-    """ Process the data used in the machine learning pipeline.
+    """Processes the data used in the machine learning pipeline.
 
-    Processes the data using one hot encoding for the categorical features and a
-    label binarizer for the labels. This can be used in either training or
+    This function applies one-hot encoding to categorical features and label
+    binarization for labels. It can be used in both training and
     inference/validation.
 
-    Note: depending on the type of model used, you may want to add in functionality that
-    scales the continuous data.
+    Note: Depending on the type of model used,
+    you may want to add functionality
+    that scales continuous data.
 
-    Inputs
-    ------
+    Parameters
+    ----------
     X : pd.DataFrame
-        Dataframe containing the features and label. Columns in `categorical_features`
-    categorical_features: list[str]
-        List containing the names of the categorical features (default=[])
-    label : str
-        Name of the label column in `X`. If None, then an empty array will be returned
-        for y (default=None)
-    training : bool
-        Indicator if training mode or inference/validation mode.
-    encoder : sklearn.preprocessing._encoders.OneHotEncoder
-        Trained sklearn OneHotEncoder, only used if training=False.
-    lb : sklearn.preprocessing._label.LabelBinarizer
-        Trained sklearn LabelBinarizer, only used if training=False.
+        DataFrame containing the features and label.
+        Columns in `categorical_features`
+    categorical_features : list[str], optional
+        List containing the names of
+        the categorical features (default=None)
+    label : str, optional
+        Name of the label column in `X`.
+        If None, then an empty array will be returned
+        for `y` (default=None)
+    training : bool, optional
+        Indicates whether the function is
+        being used for training or
+        inference/validation.
+    encoder : OneHotEncoder, optional
+        Pre-trained sklearn OneHotEncoder,
+        only used if `training=False`.
+    lb : LabelBinarizer, optional
+        Pre-trained sklearn LabelBinarizer,
+        only used if `training=False`.
 
     Returns
     -------
     X : np.array
         Processed data.
     y : np.array
-        Processed labels if labeled=True, otherwise empty np.array.
-    encoder : sklearn.preprocessing._encoders.OneHotEncoder
-        Trained OneHotEncoder if training is True, otherwise returns the encoder passed
-        in.
-    lb : sklearn.preprocessing._label.LabelBinarizer
-        Trained LabelBinarizer if training is True, otherwise returns the binarizer
-        passed in.
+        Processed labels if `label` is provided,
+        otherwise an empty np.array.
+    encoder : OneHotEncoder
+        Trained OneHotEncoder if `training=True`,
+        otherwise returns the provided encoder.
+    lb : LabelBinarizer
+        Trained LabelBinarizer\
+            if `training=True`,
+        otherwise returns the provided binarizer.
     """
-    
+
+    if categorical_features is None:
+        categorical_features = []
+
     if label is not None:
         y = X[label]
         X = X.drop([label], axis=1)
@@ -51,9 +77,9 @@ def process_data(
         y = np.array([])
 
     X_categorical = X[categorical_features].values
-    X_continuous = X.drop(*[categorical_features], axis=1)
+    X_continuous = X.drop(columns=categorical_features, axis=1)
 
-    if training is True:
+    if training:
         encoder = OneHotEncoder(sparse_output=False, handle_unknown="ignore")
         lb = LabelBinarizer()
         X_categorical = encoder.fit_transform(X_categorical)
@@ -62,7 +88,6 @@ def process_data(
         X_categorical = encoder.transform(X_categorical)
         try:
             y = lb.transform(y.values).ravel()
-        # Catch the case where y is None because we're doing inference.
         except AttributeError:
             pass
 
