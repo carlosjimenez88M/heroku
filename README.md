@@ -4,7 +4,7 @@
 **API (FastAPI) Description**  
 Below is an example of how to interact with the deployed FastAPI endpoint via GET and POST:
 
-![](live_get.png)
+
 
 - **GET** request (root endpoint example):
   ```bash
@@ -71,5 +71,12 @@ This indicates the request succeeded (HTTP 200) and the model returned the predi
 
 
 
-### Github Actions
+### continuous_deployment
 ![](continuous_integration.png)
+
+
+### Live post 
+![](live_post.png)
+
+### live get
+![](live_get.png)
