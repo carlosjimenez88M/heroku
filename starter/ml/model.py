@@ -1,17 +1,20 @@
+import os
+
 import joblib
 import pandas as pd
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import fbeta_score, precision_score, recall_score
 from sklearn.model_selection import train_test_split
+
 from data import process_data
-import os
+
 df_path = os.path.join(
-    os.path.dirname(__file__), 
-                       "census.csv")
+    os.path.dirname(__file__),
+    "census.csv")
 df = pd.read_csv(df_path)
 df = pd.read_csv(
     "census.csv"
-    )
+)
 df.columns = df.columns.str.strip()
 
 categorical_features = [
