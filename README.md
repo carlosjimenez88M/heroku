@@ -4,6 +4,8 @@
 **API (FastAPI) Description**  
 Below is an example of how to interact with the deployed FastAPI endpoint via GET and POST:
 
+![](live_get.png)
+
 - **GET** request (root endpoint example):
   ```bash
   curl -X GET https://super-cool-demo-app-aba1064edd33.herokuapp.com/
@@ -69,4 +71,5 @@ This indicates the request succeeded (HTTP 200) and the model returned the predi
 
 
 
-
+### Github Actions
+![](continuous_integration.png)
